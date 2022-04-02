@@ -79,12 +79,12 @@ int eval(std::string pref) {
                 st2.push(oper);
                 oper = 0;
             }
-            switch (pref[i]) {
+            switch (pref[l]) {
             case '+':
             {
-                int op1 = stack2.get();
+                int op1 = st2.get();
                 stack2.pop();
-                int op2 = stack2.get();
+                int op2 = st2.get();
                 stack2.pop();
                 stack2.push(op1 + op2);
                 break;
@@ -100,18 +100,18 @@ int eval(std::string pref) {
             }
             case '*':
             {
-                int op1 = stack2.get();
-                stack2.pop();
-                int op2 = stack2.get();
-                stack2.pop();
-                stack2.push(op1 * op2);
+                int op1 = st2.get();
+                st2.pop();
+                int op2 = st2.get();
+                st2.pop();
+                st2.push(op1 * op2);
                 break;
             }
             case '/':
             {
-                int op1 = stack2.get();
+                int op1 = st2.get();
                 stack2.pop();
-                int op2 = stack2.get();
+                int op2 = st2.get();
                 stack2.pop();
                 stack2.push(op2 / op1);
                 break;
