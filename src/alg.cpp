@@ -3,81 +3,71 @@
 #include <map>
 #include "tstack.h"
 
-int un_num(const char& sim)
-{
-	std::pair<char, int> priority[6];
-	priority[0].first = '('; priority[0].second = 0;
-	priority[1].first = ')'; priority[1].second = 1;
-	priority[2].first = '+'; priority[2].second = 2;
-	priority[3].first = '-'; priority[3].second = 2;
-	priority[4].first = '*'; priority[4].second = 3;
-	priority[5].first = '/'; priority[5].second = 3;
-	int prior = -1;
-	for (int j = 0; j < 6; ++j)
-		if (sim == priority[j].first)
-		{
-			prior = priority[j].second;
-			break;
-		}
-	return prior;
+int prior(char oper) {
+    if (oper == '+' || oper == '-')
+        return 1;
+    if (oper == '(')
+        return 0;
+    if (oper == '*' || oper == '/')
+        return 0;
+    return -1;
 }
-std::string infx2pstfx(std::string inf)
-{
-	std::string work;
-	TStack<char> stack;
-	for (auto& sim : inf)
-	{
-		int prior = un_num(sim);
-		if (prior == -1)
-			work += sim;
-		else
-			if (stack.get() < prior || prior == 0 || stack.isEmpty())
-				stack.push(sim);
-			else if (sim == ')')
-			{
-				char sm = stack.get();
-				while (un_num(sm) >= prior)
-				{
-					work += sm;
-					stack.pop();
-					sm = stack.get();
-				}
-				stack.pop();
-			}
-			else
-			{
-				char sm = stack.get();
-				while (un_num(sm) >= prior)
-				{
-					work += sm;
-					stack.pop();
-					sm = stack.get();
-				}
-				stack.push(sim);
-			}
-	}
-	while (!stack.isEmpty())
-	{
-		work += stack.get();
-		stack.pop();
-	}
-	return work;
+
+std::string infx2pstfx(std::string inf) {
+	TStack <char, 100> st;
+    std::string post;
+    for (int k = 0; k < inf.size(); k++) {
+        int pr = prior(inf[i]);
+        if ((prior(inf[k]) == -1) && (inf[k] != ')')) {
+            if (!post.empty() && prior(inf[k - 1]) != -1) {
+                post.push_back(' ');
+            }
+            post.push_back(inf[k]);
+
+        } else if ((prior(inf[k]) > prior(st.get()))
+                   || (st.isEmpty()) || (inf[k] == '(')) {
+            st.push(inf[k]);
+        } else {
+            if (inf[k] == ')') {
+                while (st.get() != '(') {
+                    post.push_back(' ');
+                    post.push_back(st.get());
+                    st.pop();
+                }
+                st.pop();
+            } else {
+                while (prior(st.get()) >= prior(inf[k])) {
+                    post.push_back(' ');
+                    post.push_back(st.get());
+                    st.pop();
+                }
+                st.push(inf[k]);
+            }
+        }
+    }
+    while (!st.isEmpty()) {
+        post.push_back(' ');
+        if (st.get() != '(') {
+            post.push_back(st.get());
+        }
+        st.pop();
+    }
+    return post;
 }
-int counter(const int& a, const int& b, const char& el)
-{
-	switch (el)
-	{
-	default:
-		break;
-	case '+':return a + b;
-	case '-':return a - b;
-	case '*':return a * b;
-	case '/':return a / b;
-	}
+int convert(char count) {
+    int i = 0;
+    if (count >= '0' && count <= '9') {
+        for (char k = '0'; k <= '9'; k++, i++) {
+            if (count == k)
+                return i;
+        }
+    }
+    return -1;
 }
+
 int eval(std::string pref) {
 	int sum{ 0 };
-	TStack<int> stack;
+	TStack<int> st;
 	for (auto& el : pst)
 	{
 		if (un_num(el) == -1)
@@ -86,16 +76,16 @@ int eval(std::string pref) {
 			k[0] = el;
 			k[1] = '\0';
 			int r = atoi(k);
-			stack.push(r);
+			st.push(r);
 		}
 		else
 		{
-			int b = stack.get();
-			stack.pop();
-			int a = stack.get();
-			stack.pop();
-			stack.push(counter(a, b, el));
+			int b = st.get();
+			st.pop();
+			int a = st.get();
+			st.pop();
+			st.push(counter(a, b, el));
 		}
 	}
-	return stack.get();
+	return st.get();
 }
