@@ -79,41 +79,41 @@ int eval(std::string pref) {
                 st2.push(oper);
                 oper = 0;
             }
-            switch (pref[l]) {
-				case '*':
-            {
-                int oper1 = st2.get();
-                st2.pop();
-                int oper2 = st2.get();
-                st2.pop();
-                st2.push(oper1 * oper2);
-                break;
-            }
-            case '/':
-            {
-                int oper1 = st2.get();
-                st2.pop();
-                int oper2 = st2.get();
-                st2.pop();
-                st2.push(oper2 / oper1);
-                break;
-            }
+            switch (pref[i]) {
             case '+':
             {
-                int oper1 = st2.get();
-                st2.pop();
-                int oper2 = st2.get();
-                st2.pop();
-                st2.push(oper1 + oper2);
+                int op1 = stack2.get();
+                stack2.pop();
+                int op2 = stack2.get();
+                stack2.pop();
+                stack2.push(op1 + op2);
                 break;
             }
             case '-':
             {
-                int oper1 = st2.get();
-                st2.pop();
-                int oper2 = st2.get();
-                st2.pop();
-                st2.push(oper2 - oper1);
+                int op1 = stack2.get();
+                stack2.pop();
+                int op2 = stack2.get();
+                stack2.pop();
+                stack2.push(op2 - op1);
+                break;
+            }
+            case '*':
+            {
+                int op1 = stack2.get();
+                stack2.pop();
+                int op2 = stack2.get();
+                stack2.pop();
+                stack2.push(op1 * op2);
+                break;
+            }
+            case '/':
+            {
+                int op1 = stack2.get();
+                stack2.pop();
+                int op2 = stack2.get();
+                stack2.pop();
+                stack2.push(op2 / op1);
                 break;
             }
             }
