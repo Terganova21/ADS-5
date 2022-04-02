@@ -93,7 +93,7 @@ int eval(std::string pref) {
             {
                 int op1 = st2.get();
                 st2.pop();
-                int op2 = stack2.get();
+                int op2 = st2.get();
                 st2.pop();
                 st2.push(op2 - op1);
                 break;
