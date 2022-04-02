@@ -4,11 +4,11 @@
 #include "tstack.h"
 
 int prior(char oper) {
+	if (oper == '*' || oper == '/')
+        return 0;
     if (oper == '+' || oper == '-')
         return 1;
     if (oper == '(')
-        return 0;
-    if (oper == '*' || oper == '/')
         return 0;
     return -1;
 }
@@ -77,7 +77,7 @@ int eval(std::string pref) {
                 oper = 0;
             }
             switch (pref[l]) {
-	    case '*':
+			case '*':
             {
                 int oper1 = st2.get();
                 st2.pop();
