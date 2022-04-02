@@ -83,19 +83,19 @@ int eval(std::string pref) {
             case '+':
             {
                 int op1 = st2.get();
-                stack2.pop();
+                st2.pop();
                 int op2 = st2.get();
-                stack2.pop();
-                stack2.push(op1 + op2);
+                st2.pop();
+                st2.push(op1 + op2);
                 break;
             }
             case '-':
             {
                 int op1 = stack2.get();
-                stack2.pop();
+                st2.pop();
                 int op2 = stack2.get();
-                stack2.pop();
-                stack2.push(op2 - op1);
+                st2.pop();
+                st2.push(op2 - op1);
                 break;
             }
             case '*':
