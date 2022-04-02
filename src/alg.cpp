@@ -14,7 +14,7 @@ int prior(char oper) {
 }
 
 std::string infx2pstfx(std::string inf) {
-	TStack <char, 100> st;
+    TStack <char, 100> st;
     std::string post;
     for (int k = 0; k < inf.size(); k++) {
         int pr = prior(inf[k]);
@@ -66,10 +66,10 @@ int convert(char count) {
 }
 
 int eval(std::string pref) {
-	TStack<int, 100> st2;
-	int oper = 0;
+    TStack<int, 100> st2;
+    int oper = 0;
   for (int l = 0; l < pref.size(); l++) {
-	  if (convert(pref[l]) > -1) {
+       if (convert(pref[l]) > -1) {
             oper = oper * 10 + convert(pref[l]);;
         } else {
             if (oper != 0) {
@@ -77,7 +77,7 @@ int eval(std::string pref) {
                 op = 0;
             }
             switch (pref[l]) {
-		    case '*':
+	    case '*':
             {
                 int oper1 = st2.get();
                 st2.pop();
