@@ -17,7 +17,7 @@ std::string infx2pstfx(std::string inf) {
 	TStack <char, 100> st;
     std::string post;
     for (int k = 0; k < inf.size(); k++) {
-        int pr = prior(inf[i]);
+        int pr = prior(inf[k]);
         if ((prior(inf[k]) == -1) && (inf[k] != ')')) {
             if (!post.empty() && prior(inf[k - 1]) != -1) {
                 post.push_back(' ');
@@ -66,26 +66,55 @@ int convert(char count) {
 }
 
 int eval(std::string pref) {
-	int sum{ 0 };
-	TStack<int> st;
-	for (auto& el : pst)
-	{
-		if (un_num(el) == -1)
-		{
-			char k[2];
-			k[0] = el;
-			k[1] = '\0';
-			int r = atoi(k);
-			st.push(r);
-		}
-		else
-		{
-			int b = st.get();
-			st.pop();
-			int a = st.get();
-			st.pop();
-			st.push(counter(a, b, el));
-		}
-	}
-	return st.get();
+	TStack<int, 100> st2;
+	int oper = 0;
+  for (int l = 0; l < pref.size(); l++) {
+	  if (convert(pref[l]) > -1) {
+            oper = oper * 10 + convert(pref[l]);;
+        } else {
+            if (oper != 0) {
+                st2.push(oper);
+                op = 0;
+            }
+            switch (pref[l]) {
+	    case '*':
+            {
+                int oper1 = st2.get();
+                st2.pop();
+                int oper2 = st2.get();
+                st2.pop();
+                st2.push(oper1 * oper2);
+                break;
+            }
+            case '/':
+            {
+                int oper1 = st2.get();
+                st2.pop();
+                int oper2 = st2.get();
+                st2.pop();
+                st2.push(oper2 / oper1);
+                break;
+            }
+            case '+':
+            {
+                int oper1 = st2.get();
+                st2.pop();
+                int oper2 = st2.get();
+                st2.pop();
+                st2.push(oper1 + oper2);
+                break;
+            }
+            case '-':
+            {
+                int oper1 = st2.get();
+                st2.pop();
+                int oper2 = st2.get();
+                st2.pop();
+                st2.push(oper2 - oper1);
+                break;
+            }
+            }
+        }
+    }
+    return st2.get();
 }
