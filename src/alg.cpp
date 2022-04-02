@@ -3,13 +3,16 @@
 #include <map>
 #include "tstack.h"
 
-int prior(char oper) {
-	if (oper == '*' || oper == '/')
-        return 0;
-    if (oper == '+' || oper == '-')
+int priority(char ch) {
+    if (ch == '(') {
         return 1;
-    if (oper == '(')
-        return 0;
+    }
+    if (ch == '+' || ch == '-') {
+        return 2;
+    }
+    if (ch == '*' || ch == '/') {
+        return 3;
+    }
     return -1;
 }
 
