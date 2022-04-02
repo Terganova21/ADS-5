@@ -74,7 +74,7 @@ int eval(std::string pref) {
         } else {
             if (oper != 0) {
                 st2.push(oper);
-                op = 0;
+                oper = 0;
             }
             switch (pref[l]) {
 	    case '*':
