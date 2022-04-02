@@ -91,7 +91,7 @@ int eval(std::string pref) {
             }
             case '-':
             {
-                int op1 = stack2.get();
+                int op1 = st2.get();
                 st2.pop();
                 int op2 = stack2.get();
                 st2.pop();
@@ -110,7 +110,7 @@ int eval(std::string pref) {
             case '/':
             {
                 int op1 = st2.get();
-                stack2.pop();
+                st2.pop();
                 int op2 = st2.get();
                 stack2.pop();
                 stack2.push(op2 / op1);
