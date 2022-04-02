@@ -3,7 +3,7 @@
 #include <map>
 #include "tstack.h"
 
-int priority(char ch) {
+int prior(char ch) {
     if (ch == '(') {
         return 1;
     }
